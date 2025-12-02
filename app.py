@@ -6,8 +6,8 @@ import tensorflow as tf
 from huggingface_hub import hf_hub_download
 
 REPO_ID = "LilyThao/thao_efficientnetv2b3-dr"
-FILENAME_IN_REPO = "best_efficientnetv2b3.keras"
-MODEL_PATH = "best_efficientnetv2b3.keras"
+FILENAME_IN_REPO = "best_efficientnetv2b3.h5"
+MODEL_PATH = "best_efficientnetv2b3.h5"
 IMG_SIZE = (224, 224)
 
 # Define a mapping from numerical labels to human-readable class names
