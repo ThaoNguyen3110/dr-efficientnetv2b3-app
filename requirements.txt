@@ -1,0 +1,15 @@
+print("""
+streamlit
+tensorflow
+pillow
+numpy
+opencv-python
+pandas
+matplotlib
+seaborn
+scikit-learn
+tqdm
+torch
+torchvision
+timm
+""")
