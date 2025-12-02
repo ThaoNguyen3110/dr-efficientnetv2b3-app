@@ -6,6 +6,8 @@ import tensorflow as tf
 from tensorflow.keras.applications import efficientnet_v2
 from huggingface_hub import hf_hub_download
 from pathlib import Path
+from openai import OpenAI
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 # Set Streamlit page configuration (must be first Streamlit command)
 st.set_page_config(
@@ -67,6 +69,28 @@ def preprocess_image(img: Image.Image) -> np.ndarray:
     # Apply EfficientNetV2-specific preprocessing (same as during training)
     img_array = efficientnet_v2.preprocess_input(img_array)
     return img_array
+
+def get_dr_description(label_text: str) -> str:
+    prompt = f"""
+    You are an assistant providing general medical information.
+    lease briefly explain the stage of diabetic retinopathy:: "{label_text}".
+
+    Requirements:
+    - Briefly describe the stage of the disease.
+    - List treatment and follow-up directions REFERENCE (non-personalized).
+    - Always remind the patient to see an ophthalmologist for accurate advice.
+    - Limit about 150–200 words.
+    """
+
+    completion = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": "You are a medical assistant who only provides reference information, always reminding users to see a doctor.."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.3,
+    )
+    return completion.choices[0].message.content
 
 # Load the model
 model = load_model()
