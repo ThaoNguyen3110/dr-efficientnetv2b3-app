@@ -73,7 +73,7 @@ def preprocess_image(img: Image.Image) -> np.ndarray:
 def get_dr_description(label_text: str) -> str:
     prompt = f"""
     You are an assistant providing general medical information.
-    lease briefly explain the stage of diabetic retinopathy:: "{label_text}".
+    Please briefly explain the stage of diabetic retinopathy: "{label_text}".
 
     Requirements:
     - Briefly describe the stage of the disease.
