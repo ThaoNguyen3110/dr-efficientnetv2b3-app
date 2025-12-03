@@ -135,6 +135,11 @@ if uploaded_file is not None:
                     pred_class = int(np.argmax(pred_probs))
                     pred_conf = float(np.max(pred_probs))
 
+                    # Get chatgpt to loading description
+                    label_text = ID2LABEL.get(pred_class, str(pred_class))
+                    with st.spinner("Generating disease description with AI..."):
+                        description = get_dr_description(label_text)
+
                     # Display the predicted result
                     st.success("Prediction completed!")
                     st.subheader("📊 Predicted Result")
@@ -145,6 +150,14 @@ if uploaded_file is not None:
                         st.metric("Predicted Class", ID2LABEL.get(pred_class, str(pred_class)))
                     with col2:
                         st.metric("Confidence", f"{pred_conf:.2%}")
+
+                    # Show the description of class
+                    st.markdown("### 🩺 Disease description (AI-generated, for reference only)")
+                    st.write(description)
+                    st.info(
+                        "This information is for educational purposes only and does not replace "
+                        "a consultation with an eye specialist."
+                    )
 
                     # Display probabilities for all classes in a table
                     st.subheader("📈 Probability for Each Class")
