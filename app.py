@@ -85,7 +85,7 @@ def get_dr_description(label_text: str) -> str:
     completion = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
-            {"role": "system", "content": "You are a medical assistant who only provides reference information, always reminding users to see a doctor.."},
+            {"role": "system", "content": "You are a medical assistant who only provides reference information, always reminding users to see a doctor."},
             {"role": "user", "content": prompt}
         ],
         temperature=0.3,
